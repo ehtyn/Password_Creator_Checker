@@ -2,23 +2,25 @@ from math import sqrt
 from colorama import Fore, Style, init
 init(autoreset = True)
 
+# Password strength tester. Prints output in a colored way.
+# This checker values length and entropy. The shorter a password is, the more strict it is on entropy
+
 pswd = input('Enter password: ')
 
 
-int_amt = 0
-cap = 0
-low = 0
-sym = 0
+int_amt = 0 # Integer amount in password
+cap = 0 # Capital letter amount in password
+low = 0 # Lowercase amount in password
+sym = 0 # Symbol amount in password
 
 password_strength = 0
 
+# Checks each char systematically
+
 for char in pswd:
-    try:
-        int(char)
+    if char.isdigit(): # More efficient way of checking if char is number than try/except
         int_amt += 1
-    except ValueError:
-        pass
-    if char.isupper():
+    elif char.isupper():
         cap += 1
     elif char.islower():
         low += 1
@@ -27,7 +29,7 @@ for char in pswd:
 
 
 
-
+# Adds variable points based on length of password
 
 passwd_len = len(pswd)
 if passwd_len < 8:
@@ -37,7 +39,7 @@ elif 8 <= passwd_len < 16:
 elif 16 <= passwd_len:
     change_var = 10
 
-equal_chars = passwd_len / 4  # how many instances of a thing there should be
+equal_chars = passwd_len / 4  # how many instances of a specific character there should be
 margin_OE = sqrt(equal_chars) # Parameter of error
 
 def check_value(parameter1, parameter2):
@@ -53,8 +55,6 @@ check_value(equal_chars, low)
 check_value(equal_chars, sym)
 
 
-
-
 seen_chars = {} # Creates an empty dictionary of seen characters
 
 for char in pswd:
@@ -66,8 +66,11 @@ for char in pswd:
 acceptable_repeats = sqrt(passwd_len)
 
 
+# This line is lowkey tuff ngl 
+
+
 for value in seen_chars.values():
-    if value > acceptable_repeats:
+    if value > acceptable_repeats: # Checks if there are more instances of a char than acceptable. If so, it subtracts the change_var from score.
         password_strength -= change_var
     else: 
         password_strength += change_var
