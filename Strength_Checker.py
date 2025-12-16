@@ -16,6 +16,7 @@ sym = 0 # Symbol amount in password
 password_strength = 0
 
 # Checks each char systematically
+# Methodical checking stage
 
 for char in pswd:
     if char.isdigit(): # More efficient way of checking if char is number than try/except
@@ -26,11 +27,14 @@ for char in pswd:
         low += 1
     elif not char.isalnum():
         sym += 1
+    else:
+        print(Fore.RED + f'Character {char} was not identifiable. ')
+        break
 
-
+# End methodical checking stage
 
 # Adds variable points based on length of password
-
+# Variable points system
 passwd_len = len(pswd)
 if passwd_len < 8:
     change_var = 2
@@ -38,6 +42,7 @@ elif 8 <= passwd_len < 16:
     change_var = 6
 elif 16 <= passwd_len:
     change_var = 10
+# End variable points system
 
 equal_chars = passwd_len / 4  # how many instances of a specific character there should be
 margin_OE = sqrt(equal_chars) # Parameter of error
@@ -59,31 +64,37 @@ check_value(equal_chars, sym)
 
 seen_chars = {} # Creates an empty dictionary of seen characters
 
+# Dictionary updater
 for char in pswd:
     if char not in seen_chars: # Checks if the character isnt in seen chars, than if it isnt it adds it with counter of 1
         seen_chars[char] = 1
     else:
         seen_chars[char] += 1 # Adds 1 to the seen counter if counter exists
+# End dictionary updater
 
 acceptable_repeats = sqrt(passwd_len)
 
 
 # This line is lowkey tuff ngl 
 
-
+# Character repeat checker
 for value in seen_chars.values():
     if value > acceptable_repeats: # Checks if there are more instances of a char than acceptable. If so, it subtracts the change_var from score.
         password_strength -= change_var
     else: 
         password_strength += change_var
+# End character repeat checker
 
-
-max_score = 250
+# Strength limiter
+max_score = 100
 
 if password_strength >= max_score:
     password_strength = 100
+elif password_strength <= 0:
+    password_strength = 0
 else:
     pass
+# End strength limiter
 
 final_score = password_strength
 
