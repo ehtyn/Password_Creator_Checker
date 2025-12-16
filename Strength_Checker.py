@@ -5,7 +5,7 @@ init(autoreset = True)
 # Password strength tester. Prints output in a colored way.
 # This checker values length and entropy. The shorter a password is, the more strict it is on entropy
 
-pswd = input('Enter password: ')
+pswd = input(Fore.BLUE + 'Enter password: ') 
 
 
 int_amt = 0 # Integer amount in password
@@ -47,6 +47,8 @@ def check_value(parameter1, parameter2):
     difference = abs(parameter1 - parameter2)
     if difference < margin_OE:
         password_strength += change_var
+    else: # Makes the checker more strict 
+        password_strength -= change_var
     
 
 check_value(equal_chars, int_amt)
