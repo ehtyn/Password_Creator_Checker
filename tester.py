@@ -17,7 +17,8 @@ with open(json_file, 'w') as f:
 def create_password():
     random_password = []
     password = ""
-    while len(random_password) < random.randint(1, 20):
+    random_length = random.randint(1, 20)
+    while len(random_password) < random_length:
         random_selection = characters_list.select_random_char()
         random_password.append(random_selection)
         password = "".join(random_password)
