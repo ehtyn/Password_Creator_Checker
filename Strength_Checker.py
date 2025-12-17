@@ -119,9 +119,10 @@ def main(pswd):
             color = Fore.GREEN
 
         return color
-
-    print(print_color() + f'Your password ranked a score of {final_score}%. ')
-    return final_score
+    if __name__ == '__main__':
+        print(print_color() + f'Your password ranked a score of {final_score}%. ')
+    else:
+        return final_score
 
 if __name__ == '__main__':
     main(input('Enter password to test. '))
